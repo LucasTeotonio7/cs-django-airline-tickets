@@ -1,6 +1,9 @@
 from django.shortcuts import render
+from tickets.forms import TicketForms
 
 # Create your views here.
 
 def index(request):
-    return render(request, 'index.html')
+    form = TicketForms()
+    context = {'form':form}
+    return render(request, 'index.html', context)
