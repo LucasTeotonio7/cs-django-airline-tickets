@@ -5,21 +5,34 @@ from datetime import datetime
 
 from tickets.class_types import class_types
 from tickets.validation import *
+from tickets.models import Ticket, Person, ClassTypes
 
 
-class TicketForms(forms.Form):
-    origin = forms.CharField(label='Origem', max_length=100,)
-    destiny = forms.CharField(label='Destino', max_length=100)
-    departure_date = forms.DateField(label='Ida', widget=DatePicker())
-    date_back = forms.DateField(label='Volta', widget=DatePicker())
+class TicketForms(forms.ModelForm):
+
     date_search = forms.DateField(label='Data da Pesquisa', widget=DatePicker(), disabled=True, initial=datetime.today())
-    travel_class = forms.ChoiceField(label='Classe', choices=class_types)
-    informations = forms.CharField(
-        label='Informações extras',
-        widget=forms.Textarea(),
-        required=False
-    )
-    email = forms.EmailField(label='email', max_length=150)
+
+
+    class Meta:
+        model = Ticket
+        fields = '__all__'
+
+        widgets = {
+            'departure_date': DatePicker(),
+            'date_back': DatePicker(),
+        }
+
+    # origin = forms.CharField(label='Origem', max_length=100,)
+    # destiny = forms.CharField(label='Destino', max_length=100)
+    # departure_date = forms.DateField(label='Ida', widget=DatePicker())
+    # date_back = forms.DateField(label='Volta', widget=DatePicker())
+    # travel_class = forms.ChoiceField(label='Classe', choices=class_types)
+    # informations = forms.CharField(
+    #     label='Informações extras',
+    #     widget=forms.Textarea(),
+    #     required=False
+    # )
+    # email = forms.EmailField(label='email', max_length=150)
 
     def clean(self):
         origin = self.cleaned_data.get("origin")
@@ -36,7 +49,3 @@ class TicketForms(forms.Form):
             for error in errors_list:
                 error_msg = errors_list[error]
                 self.add_error(error, error_msg)
-
-        return self.changed_data
-
-
