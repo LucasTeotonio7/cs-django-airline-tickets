@@ -49,3 +49,10 @@ class TicketForms(forms.ModelForm):
             for error in errors_list:
                 error_msg = errors_list[error]
                 self.add_error(error, error_msg)
+
+
+class PersonForms(forms.ModelForm):
+
+    class Meta:
+        model = Person
+        exclude = ['name']

@@ -18,6 +18,20 @@
             {% endif %}
         </div>
         {% endfor %}
+
+        {% for field in person_form.visible_fields %}
+        <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{field.label}}</label>
+            {% if field.errors %}
+                {{ field|add_class:'form-control is-invalid' }}
+                <div class="invalid-feedback">
+                    {{ field.errors }}
+                </div>
+            {% else %}
+                {{ field|add_class:'form-control' }}
+            {% endif %}
+        </div>
+        {% endfor %}
         <input type="submit" value="ok" class="btn btn-success">
     </form>
 </section>
