@@ -24,10 +24,13 @@ class TicketForms(forms.Form):
     def clean(self):
         origin = self.cleaned_data.get("origin")
         destiny = self.cleaned_data.get("destiny")
+        departure_date = self.cleaned_data.get("departure_date")
+        date_back = self.cleaned_data.get("date_back")
         errors_list = {}
         field_has_number(origin, 'origin', errors_list)
         field_has_number(destiny, 'destiny', errors_list)
         equals_origin_destiny(origin, destiny, errors_list)
+        departure_is_greater_than_back(departure_date, date_back, errors_list)
 
         if errors_list is not None:
             for error in errors_list:
