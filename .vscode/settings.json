@@ -8,4 +8,16 @@
     "emmet.includeLanguages": {
         "django-html": "html"
     },
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 8082,
+            "driver": "PostgreSQL",
+            "database": "airline_tickets_db",
+            "username": "postgres",
+            "password": "postgres",
+            "name": "airline_tickets_db"
+        }
+    ],
 }
