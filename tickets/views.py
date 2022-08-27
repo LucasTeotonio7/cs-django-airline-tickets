@@ -12,5 +12,9 @@ def index(request):
 def search_results(request):
     if request.method == 'POST':
         form = TicketForms(request.POST)
+        if form.is_valid():
+            context = {'form':form}
+            return render(request, 'search_results.html', context)
+
         context = {'form':form}
-        return render(request, 'search_results.html', context)
+        return render(request, 'index.html', context)

@@ -18,3 +18,12 @@ class TicketForms(forms.Form):
     )
     email = forms.EmailField(label='email', max_length=150)
 
+    def clean_origin(self):
+        origin = self.cleaned_data.get("origin")
+
+        if any(char.isdigit() for char in origin):
+            raise forms.ValidationError('Origem inválida: o campo não pode ter caracteres númericos')
+
+        return origin
+
+
