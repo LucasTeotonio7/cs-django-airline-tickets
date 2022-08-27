@@ -1,7 +1,10 @@
 from django import forms
+
 from tempus_dominus.widgets import DatePicker
 from datetime import datetime
+
 from tickets.class_types import class_types
+from tickets.validation import *
 
 
 class TicketForms(forms.Form):
@@ -18,20 +21,19 @@ class TicketForms(forms.Form):
     )
     email = forms.EmailField(label='email', max_length=150)
 
-    def clean_origin(self):
+    def clean(self):
         origin = self.cleaned_data.get("origin")
-
-        if any(char.isdigit() for char in origin):
-            raise forms.ValidationError('Origem inválida: o campo não pode ter caracteres númericos')
-
-        return origin
-
-    def clean_destiny(self):
         destiny = self.cleaned_data.get("destiny")
+        errors_list = {}
+        field_has_number(origin, 'origin', errors_list)
+        field_has_number(destiny, 'destiny', errors_list)
+        equals_origin_destiny(origin, destiny, errors_list)
 
-        if any(char.isdigit() for char in destiny):
-            raise forms.ValidationError('Destino inválido: o campo não pode ter caracteres númericos')
+        if errors_list is not None:
+            for error in errors_list:
+                error_msg = errors_list[error]
+                self.add_error(error, error_msg)
 
-        return destiny
+        return self.changed_data
 
 
