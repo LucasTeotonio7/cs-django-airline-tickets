@@ -10,12 +10,12 @@
             <label for="{{ field.id_for_label }}">{{field.label}}</label>
             {% if field.errors %}
                 {{ field|add_class:'form-control is-invalid' }}
+                <div class="invalid-feedback">
+                    {{ field.errors }}
+                </div>
             {% else %}
                 {{ field|add_class:'form-control' }}
             {% endif %}
-            <div class="invalid-feedback">
-                {{ field.errors }}
-            </div>
         </div>
         {% endfor %}
         <input type="submit" value="ok" class="btn btn-success">
