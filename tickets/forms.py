@@ -26,4 +26,12 @@ class TicketForms(forms.Form):
 
         return origin
 
+    def clean_destiny(self):
+        destiny = self.cleaned_data.get("destiny")
+
+        if any(char.isdigit() for char in destiny):
+            raise forms.ValidationError('Destino inválido: o campo não pode ter caracteres númericos')
+
+        return destiny
+
 

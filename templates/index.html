@@ -8,7 +8,14 @@
         {% for field in form.visible_fields %}
         <div class="form-group">
             <label for="{{ field.id_for_label }}">{{field.label}}</label>
-            {{ field|add_class:'form-control' }}
+            {% if field.errors %}
+                {{ field|add_class:'form-control is-invalid' }}
+            {% else %}
+                {{ field|add_class:'form-control' }}
+            {% endif %}
+            <div class="invalid-feedback">
+                {{ field.errors }}
+            </div>
         </div>
         {% endfor %}
         <input type="submit" value="ok" class="btn btn-success">
